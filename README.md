@@ -68,9 +68,9 @@ interface IDataListener {
   clear: () => void;
 }
 ```  
-Die Methode ```push``` wird später neue werte an die Tabelle übergeben.
-Die Methode ```remove``` wird einen einzelnen Datensatz aus der Tabelle entfernen.
-Die Methode ```clear``` wird alle Daten aus der Tabelle entfernen.
+Die Methode ```push``` wird später neue werte an die Tabelle übergeben.  
+Die Methode ```remove``` wird einen einzelnen Datensatz aus der Tabelle entfernen.  
+Die Methode ```clear``` wird alle Daten aus der Tabelle entfernen.  
 
 
 
