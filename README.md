@@ -15,6 +15,7 @@
     3. [Verwendung](#verwendung)  
 2. [Interface](#interface)  
 3. [Listener Pattern](#listener-pattern)  
+4. [Programm](#programm)
 
 ## Services  
 ### Warum Sevices 
@@ -71,6 +72,127 @@ interface IDataListener {
 Die Methode ```push``` wird später neue werte an die Tabelle übergeben.  
 Die Methode ```remove``` wird einen einzelnen Datensatz aus der Tabelle entfernen.  
 Die Methode ```clear``` wird alle Daten aus der Tabelle entfernen.  
+## Programm
+#### data.service.ts  
+```typescript
+import { Injectable } from '@angular/core';
+
+export interface IDataRecord {
+  time: Date;
+  temp: number;
+  humidity: number;
+}
+
+interface IDataListener {
+  push: (record: IDataRecord) => void;
+  remove: (index: number) => void;
+  clear: () => void;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DataService {
+
+  private records: IDataRecord [] = [];
+  private listeners: IDataListener [] = [];
+
+  constructor() {
+
+      setTimeout(() => {
+        this.add({time: new Date(), temp: 20.12, humidity: 33.2});
+        this.add({time: new Date(), temp: 24.21, humidity: 66.6});
+        this.add({time: new Date(), temp: 22.42, humidity: 53.7});
+      }, 2000);
+    }
+
+  public addDataListener(l: IDataListener) {
+    this.listeners.push(l);
+  }
+
+  public removeDataListener(l: IDataListener) {
+    const i = this.listeners.findIndex( (item) => item === l ); // sucht das zu entfernende item, in der Liste
+    this.listeners.splice(i, 1); // entfernt das Item
+  }
+
+  public add(d: IDataRecord) {
+    this.records.push(d);
+    for (const l of this.listeners) {
+      try {
+        l.push(d);
+      } catch (error) {
+        console.log('err');
+      }
+    }
+  }
+  public getCount(): number {
+    return this.records.length;
+  }
+
+  public getValue(index: number): IDataRecord {
+    return this.records[index];
+  }
+}
+
+```
+#### temp-table.component.ts  
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { DataService, IDataRecord } from 'src/app/services/data.service';
+
+interface ITableRecord {
+    row: number;
+    date: string;
+    time: string;
+    temp: string;
+    humidity: string;
+}
+
+@Component({
+  selector: 'app-temp-table',
+  templateUrl: './temp-table.component.html',
+  styleUrls: ['./temp-table.component.css']
+})
+export class TempTableComponent implements OnInit {
+
+  public COLNAMES = [
+    '#',
+    'Datum',
+    'Zeit',
+    'Temperatur / °C',
+    'Feuchtigkeit / %'
+  ];
+
+  public records: ITableRecord [] = [];
+
+  constructor(private dataService: DataService) {
+    this.dataService.addDataListener({
+      push: (r) => this.pushData(r),
+      remove: null,
+      clear: null
+    });
+
+    this.records.push({row: 1, date: '2019 12 05', time: '10:05:02', temp: '23.5', humidity: '45'});
+    this.records.push({row: 2, date: '2019 12 05', time: '11:05:02', temp: '24.2', humidity: '35'});
+  }
+
+  private pushData(r: IDataRecord) {
+    const rt: ITableRecord = {
+      row: this.records.length + 1,
+      data: r.time.toLocaleDateString,
+      time: r.time.toLocaleTimeString,
+      temp: '' + r.temp,
+      humidity: '' + r.humidity
+    };
+    this.records.push(rt);
+  }
+
+  ngOnInit() {
+  }
+
+}
+
+```
 
 
 
