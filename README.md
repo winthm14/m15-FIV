@@ -43,10 +43,6 @@ Zuerst der import Befehl:
 ```
 Danach wird der Constructor erstellt:
 ```javascript  
-    this.dataService.addDataListener({
-      push: (r) => this.pushData(r),
-      remove: null,
-      clear: null
-    });
+   constructor(private dataService: DataService) {}
 ```  
 ## Listener
