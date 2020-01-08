@@ -3,8 +3,8 @@
 * **Datum:** 5.12.2019
 * **Gefehlt:** Sarah Vezonik
 * **Erstellt von:** Winter Thomas
-* **Protokoll letzte Einheit:** Sarah Vezonik
-* **Protokoll nächste Einheit:** Lorenz Breitenthaler  
+* **Protokoll letzte Einheit:** [Sarah Vezonik](https://github.com/HTLMechatronics/m15-fivu/blob/vezsam15/protokolle/protokoll_2019-11-21_vezsam15.md)
+* **Protokoll nächste Einheit:** [Lorenz Breitenthaler](https://github.com/HTLMechatronics/m15-fivu/blob/brelom15/protokolle/protokoll_2019-12-12_brelom15.md)  
 
 ----------------------------------------------------------------------------------------------
 
