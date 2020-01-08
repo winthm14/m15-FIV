@@ -13,7 +13,8 @@
     1. [Warum Services](#warum-services)  
     2. [Erzeugung](#erzeugung)  
     3. [Verwendung](#verwendung)  
-2. [Listener](#listener)  
+2. [Interface](#interface)  
+3. [Listener Pattern](#listener-pattern)  
 
 ## Services  
 ### Warum Sevices 
@@ -27,7 +28,7 @@ Mit diesem Befehl wird eine Skelettklasse erzeugt die wie folgt aussieht:
 import { Injectable } from '@angular/core';  
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root',   //Service ist in allen Komponenten verwendbar
 })
 export class DataService {
 
@@ -45,4 +46,35 @@ Danach wird der Constructor erstellt:
 ```javascript  
    constructor(private dataService: DataService) {}
 ```  
-## Listener
+## Interface  
+Interfaces beinhalten zusammengehörige Datenelemente und Methoden um sie dann in einer Klasse zu implementieren. Sie können auch als Datentyp verwendung finden. Interfaces werden nur zur Programmentwicklung in TypeScript verwendet. Im fertigen JavaScript Programm wird nicht mit Interfaces gearbeitet.  
+Im folgenden beispiel wird ein Interface angelegt um einen Datensatz zusammen zu fassen:  
+
+```typescript
+export interface IDataRecord {
+  time: Date;
+  temp: number;
+  humidity: number;
+}
+```
+Das Schlüsselwort ```export``` wird verwendet um das Interface in anderen Klassen zu verwenden falls es benötigt wird.  
+
+## Listener Pattern  
+Das Listener pattern wird mit hilfe eines Interfaces realisiert indem 3 Methoden zusammengefasst sind:  
+``` typescript  
+interface IDataListener {
+  push: (record: IDataRecord) => void;
+  remove: (index: number) => void;
+  clear: () => void;
+}
+```  
+Die Methode ```push``` wird später neue werte an die Tabelle übergeben.
+Die Methode ```remove``` wird einen einzelnen Datensatz aus der Tabelle entfernen.
+Die Methode ```clear``` wird alle Daten aus der Tabelle entfernen.
+
+
+
+
+
+
+
